@@ -109,6 +109,8 @@ otpbtn.addEventListener("click", generatetOtp);
 
 //! For Media Query 
 bar.addEventListener("click",(e)=>{
+  console.log("bar clicked")
   rightdiv.classList.toggle("bar_active");
   rightdiv.style.display = "block"
+  rightdiv.navlist.style.display = "block"
 });
