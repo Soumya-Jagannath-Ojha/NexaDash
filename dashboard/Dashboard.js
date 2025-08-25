@@ -27,12 +27,10 @@ const AddToCart = document.querySelector("#AddToCart");
 const carticon = document.querySelector("#cart");
 // console.log(carticon)
 
-
 const currUser = JSON.parse(localStorage.getItem("RegisterdData"));
 
 heading.innerText = `Welcome ${currUser.username}`;
 img.src = currUser.imgurl;
-
 
 //! Fetching data from server
 
@@ -139,11 +137,14 @@ function displayshopping(allproducts) {
       const cartbtn = card.querySelector(".cart-btn");
 
       cartbtn.addEventListener("click", () => {
-        cartbtn.innerText = 'remove from cart';
-        cartbtn.setAttribute("class","remove-btn")
+        cartbtn.classList.toggle("remove-btn");
         cartitems.push(ele);
-        // console.log(ele)
-        // console.log("cart btn clicked!");
+
+        if (cartbtn.classList.contains("remove-btn")) {
+          cartbtn.innerText = "remove from cart";
+        } else {
+          cartbtn.innerText = "Add to cart";
+        }
       });
     });
   }
@@ -163,19 +164,18 @@ function displaysetting() {
   cards_section.appendChild(card);
 }
 
-
-function displayCartItems(cartitems){
+function displayCartItems(cartitems) {
   cards_section.replaceChildren();
-  heading.innerText = `Cart Page`
-  if(cartitems.length === 0){
+  heading.innerText = `Cart Page`;
+  if (cartitems.length === 0) {
     const card = document.createElement("div");
-  card.setAttribute("class", "card");
-  card.innerHTML = `
+    card.setAttribute("class", "card");
+    card.innerHTML = `
   <h3>No Data Found</h3>
   `;
-  cards_section.appendChild(card);
-  }else{
-    cartitems.map((ele)=>{
+    cards_section.appendChild(card);
+  } else {
+    cartitems.map((ele) => {
       const card = document.createElement("div");
       card.setAttribute("class", "card");
       card.innerHTML = `
@@ -183,23 +183,26 @@ function displayCartItems(cartitems){
                   <h3>${ele.title}</h3>
                   <div class="btn-group">
                       <button class="btn buy-btn">Buy</button>
-                      <button class="btn  remove-btn" id="cartbtn">Remove from cart</button>
+                      <button class="btn cart-btn remove-btn" id="cartbtn">Remove from cart</button>
                   </div>
                   `;
       cards_section.appendChild(card);
       const removebtn = card.querySelector(".remove-btn");
-      removebtn.addEventListener("click",()=>{
+      removebtn.addEventListener("click", () => {
         // console.log("remove btn clicked")
         // console.log(ele);
 
-        cartitems = cartitems.filter((item) => item != ele);
+        // cartitems = cartitems.filter((item) => item != ele);
+        // // console.log(`filter data ${cartitems.json()}`)
+        // console.log(cartitems)
 
-        displayCartItems(cartitems);
+        let newcartitems = cartitems.filter((item) => item.title !== ele.title);
+        displayCartItems(newcartitems);
 
-      })
-    })
+        // displayCartItems(cartitems);
+      });
+    });
   }
-      
 }
 
 // users.addEventListener("click", ftechusers);
@@ -345,10 +348,8 @@ selected_category.addEventListener("change", () => {
   }
 });
 
-
-
 // cart Functionality
-carticon.addEventListener("click",()=>{
+carticon.addEventListener("click", () => {
   // console.log("cart icon clicked");
   displayCartItems(cartitems);
-})
+});
