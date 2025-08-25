@@ -24,7 +24,7 @@ registerform.addEventListener("submit",(e)=>{
         imgurl:img_url.value,
     }
     
-    alert("Register Successfully!");
+    alert("Register Successfully!, Please Login!");
     localStorage.setItem("RegisterdData",JSON.stringify(userDetails));
     window.location.href = "../index.html";
 });

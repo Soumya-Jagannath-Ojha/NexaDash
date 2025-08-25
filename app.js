@@ -19,7 +19,7 @@ arr.map((ele) => {
   const a = document.createElement("a");
   a.innerText = ele;
   // a.id = ele.toLowerCase();
-  a.href = `#${ele.toLowerCase()}`
+  a.href = `#${ele.toLowerCase()}`;
 
   // li.innerText = ele;
   // li.id = ele.toLowerCase();
@@ -31,17 +31,16 @@ const loginbtn = document.querySelector("#loginbtn");
 const loginform = document.querySelector(".loginform");
 const closebtn = document.querySelector(".closebtn");
 const bar = document.querySelector("#bar");
-const nav = document.querySelector("nav")
+const nav = document.querySelector("nav");
 const rightdiv = document.querySelector(".rightdiv");
 const getstart = document.querySelector("#getstart");
-
 
 loginbtn.addEventListener("click", () => {
   loginform.style.display = "block";
 });
-getstart.addEventListener("click",()=>{
+getstart.addEventListener("click", () => {
   loginform.style.display = "block";
-})
+});
 
 closebtn.addEventListener("click", () => {
   // console.log("close btn clicked");
@@ -73,6 +72,11 @@ const otpbtn = document.querySelector("#otpbtn");
 // console.log(email,password,otp)
 form.addEventListener("submit", (event) => {
   event.preventDefault();
+
+  if (!userDetails) {
+    alert("You Don't have an account, Please Register!");
+  }
+
   if (
     email.value === userDetails.email &&
     password.value === userDetails.password
@@ -82,15 +86,15 @@ form.addEventListener("submit", (event) => {
       password.value = "";
       otp.value = "";
       console.log("Log In Successfully");
-      loginform.style.display = "none"
+      loginform.style.display = "none";
       // window.location.href = "./dashboard.html"
-      window.location.href = `./dashboard/Dashboard.html`
+      window.location.href = `./dashboard/Dashboard.html`;
     } else {
-      alert("Invalid OTP, Please Enter The Correct OTP")
+      alert("Invalid OTP, Please Enter The Correct OTP");
       console.log("Invalid Otp");
     }
   } else {
-    alert("Invalid Credential!")
+    alert("Invalid Credential!");
     console.log("Invalid Credentail!");
   }
 });
@@ -101,16 +105,14 @@ function generatetOtp() {
 }
 otpbtn.addEventListener("click", generatetOtp);
 
-
 // console.log("RegisterdData",localStorage.getItem))
 // localStorage.getItem("RegisterdData")
 // console.log(JSON.parse(localStorage.getItem("RegisterdData")))
 
-
-//! For Media Query 
-bar.addEventListener("click",(e)=>{
+//! For Media Query
+bar.addEventListener("click", (e) => {
   // console.log("bar clicked")
   rightdiv.classList.toggle("bar_active");
-  rightdiv.style.display = "block"
+  rightdiv.style.display = "block";
   // rightdiv.navlist.style.display = "block"
 });

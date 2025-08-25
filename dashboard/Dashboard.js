@@ -21,10 +21,10 @@ const alllinks = document.querySelectorAll(
 
 const searchInput = document.querySelector("#search");
 const cards_section = document.querySelector(".cards");
-const AddToCart = document.querySelector("#AddToCart")
-console.log(AddToCart)
+const AddToCart = document.querySelector("#AddToCart");
+// console.log(AddToCart);
 const cartbtn = document.querySelector("#cartbtn");
-console.log(cartbtn)
+// console.log(cartbtn);
 
 const currUser = JSON.parse(localStorage.getItem("RegisterdData"));
 
@@ -53,6 +53,46 @@ const fetchShopping = async () => {
 //! Fetching data from server ends here
 
 //! Display Functionality
+function displayDashboard() {
+  cards_section.replaceChildren();
+
+  const card = document.createElement("div");
+  card.setAttribute("class", "card");
+  card.innerHTML = `
+        
+    <div class="dashboard-container">
+      <!-- Welcome Header -->
+      <div class="welcome-header">
+        <h1>Welcome back, ${currUser.username}! 👋</h1>
+        <p>Here’s a quick overview of your account activity</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-cards">
+        <div class="stats-card">
+          <h2>150</h2>
+          <p>Total Users</p>
+        </div>
+        <div class="stats-card">
+          <h2>320</h2>
+          <p>Projects Created</p>
+        </div>
+        <div class="stats-card">
+          <h2>85%</h2>
+          <p>Engagement Rate</p>
+        </div>
+        <div class="stats-card">
+          <h2>12</h2>
+          <p>New Notifications</p>
+        </div>
+      </div>
+    </div>
+        `;
+  cards_section.appendChild(card);
+}
+
+displayDashboard();
+
 function displayusers(allusers) {
   cards_section.replaceChildren();
   if (allusers.length === 0) {
@@ -86,8 +126,11 @@ function displayshopping(allproducts) {
       card.innerHTML = `
                   <img src=${ele.image}>
                   <h3>${ele.title}</h3>
-                  <button>Buy</button>
-                  <button id="cartbtn">Add to cart</button>
+                  <div class="btn-group">
+                      <button class="btn buy-btn">Buy</button>
+                      <button class="btn cart-btn" id="cartbtn">Add to cart</button>
+                  </div>
+                  
                   `;
       cards_section.appendChild(card);
     });
@@ -186,10 +229,12 @@ alllinks.forEach((link) => {
       // console.log("Dashboard is clicked!");
       heading.innerText = "Welcome To Dashboard";
       cards_section.replaceChildren();
-      const card = document.createElement("div");
-      card.setAttribute("class", "card");
-      card.innerHTML = `<h3>Welcome to Dashboard</h3>`;
-      cards_section.appendChild(card);
+
+      displayDashboard();
+      // const card = document.createElement("div");
+      // card.setAttribute("class", "card");
+      // card.innerHTML = `<h3>Welcome to Dashboard</h3>`;
+      // cards_section.appendChild(card);
     } else {
       alert("click wrong think");
     }
@@ -233,7 +278,7 @@ logout.addEventListener("click", (e) => {
 // })
 //! Activate which p tag is clicked is ends here
 
-//! Filtering Shopping Items 
+//! Filtering Shopping Items
 selected_category.addEventListener("change", () => {
   const select_value = selected_category.value;
   console.log(select_value);
