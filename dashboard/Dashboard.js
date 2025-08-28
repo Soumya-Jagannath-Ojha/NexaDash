@@ -6,6 +6,7 @@ const heading = document.querySelector(".heading");
 const img = document.querySelector("#img");
 const logout = document.querySelector("#logout");
 const selected_category = document.querySelector("#category");
+selected_category.style.display = "none";
 
 // console.log(category.innerHTML.)
 
@@ -26,6 +27,7 @@ const AddToCart = document.querySelector("#AddToCart");
 // console.log(AddToCart);
 const carticon = document.querySelector("#cart");
 // console.log(carticon)
+carticon.style.display = "none";
 
 const currUser = JSON.parse(localStorage.getItem("RegisterdData"));
 
@@ -56,6 +58,8 @@ const fetchShopping = async () => {
 //! Display Functionality
 function displayDashboard() {
   cards_section.replaceChildren();
+  selected_category.style.display = "none";
+  carticon.style.display = "none";
 
   const card = document.createElement("div");
   card.setAttribute("class", "card");
@@ -96,6 +100,9 @@ displayDashboard();
 
 function displayusers(allusers) {
   cards_section.replaceChildren();
+  selected_category.style.display = "none";
+  carticon.style.display = "none";
+
   if (allusers.length === 0) {
     const card = document.createElement("div");
     card.setAttribute("class", "card");
@@ -115,6 +122,9 @@ function displayusers(allusers) {
 
 function displayshopping(allproducts) {
   cards_section.replaceChildren();
+  selected_category.style.display = "block";
+  carticon.style.display = "flex";
+
   if (allproducts.length === 0) {
     const card = document.createElement("div");
     card.setAttribute("class", "card");
@@ -152,6 +162,9 @@ function displayshopping(allproducts) {
 
 function displaysetting() {
   cards_section.replaceChildren();
+  selected_category.style.display = "none";
+  carticon.style.display = "none";
+
   const card = document.createElement("div");
   card.setAttribute("class", "card");
   card.innerHTML = `
@@ -175,7 +188,7 @@ function displayCartItems(cartitems) {
   `;
     cards_section.appendChild(card);
   } else {
-    cartitems.map((ele) => {
+    cartitems.forEach((ele) => {
       const card = document.createElement("div");
       card.setAttribute("class", "card");
       card.innerHTML = `
@@ -183,21 +196,19 @@ function displayCartItems(cartitems) {
                   <h3>${ele.title}</h3>
                   <div class="btn-group">
                       <button class="btn buy-btn">Buy</button>
-                      <button class="btn cart-btn remove-btn" id="cartbtn">Remove from cart</button>
+                      <button class="btn cart-btn remove-btn">Remove from cart</button>
                   </div>
                   `;
       cards_section.appendChild(card);
       const removebtn = card.querySelector(".remove-btn");
+
       removebtn.addEventListener("click", () => {
-        // console.log("remove btn clicked")
+        console.log("remove btn clicked");
         // console.log(ele);
 
-        // cartitems = cartitems.filter((item) => item != ele);
-        // // console.log(`filter data ${cartitems.json()}`)
-        // console.log(cartitems)
-
-        let newcartitems = cartitems.filter((item) => item.title !== ele.title);
-        displayCartItems(newcartitems);
+        cartitems = cartitems.filter((item) => item.title !== ele.title);
+        console.log(cartitems);
+        displayCartItems(cartitems);
 
         // displayCartItems(cartitems);
       });
