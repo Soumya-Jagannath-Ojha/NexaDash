@@ -7,17 +7,17 @@ const img = document.querySelector("#img");
 const logout = document.querySelector("#logout");
 const selected_category = document.querySelector("#category");
 selected_category.style.display = "none";
-
-// console.log(category.innerHTML.)
+const orders = document.querySelector("#orders");
 
 let allusers = [];
 let allproducts = [];
 let activelink = null;
 let cartitems = [];
+let allorders = [];
 
 //! Targetting all the p tags from aside
 const alllinks = document.querySelectorAll(
-  "#users,#products,#setting,#dashboard"
+  "#users,#products,#orders,#setting,#dashboard"
 );
 // console.log(alllinks);
 
@@ -138,32 +138,37 @@ function displayshopping(allproducts) {
                   <img src=${ele.image}>
                   <h3>${ele.title}</h3>
                   <div class="btn-group">
-                      <button class="btn buy-btn">Buy</button>
+                      <button class="btn buy-btn">
+                      ${allorders.some((item)=> item.id === ele.id) ? "Purchased" : "Buy"}
+                      </button>
                       <button class="btn cart-btn" >
-                      ${cartitems.some(item => item.id === ele.id) ? "Remove from cart" : "Add to cart"}
+                      ${
+                        cartitems.some((item) => item.id === ele.id)
+                          ? "Remove from cart"
+                          : "Add to cart"
+                      }
                       </button>
                   </div>
                   
                   `;
-                  console.log(ele)
+      console.log(ele);
       cards_section.appendChild(card);
       const cartbtn = card.querySelector(".cart-btn");
 
       cartbtn.addEventListener("click", () => {
-
-        if(cartitems.some(item => item.id === ele.id)){
+        if (cartitems.some((item) => item.id === ele.id)) {
           // remove if already in cart
           cartitems = cartitems.filter((item) => item.id !== ele.id);
           cartbtn.innerText = "Add to cart";
-        }else{
+        } else {
           // add new item
           cartitems.push(ele);
-          cartbtn.innerText = 'Remove from cart';
-
+          cartbtn.innerText = "Remove from cart";
         }
-
-
       });
+
+      
+
     });
   }
 }
@@ -212,10 +217,23 @@ function displayCartItems() {
 
       removebtn.addEventListener("click", () => {
         // console.log("remove btn clicked");
-        cartitems = cartitems.filter((item)=> item.id !== ele.id);
+        cartitems = cartitems.filter((item) => item.id !== ele.id);
         displayCartItems();
       });
     });
+  }
+}
+
+function displayOrders() {
+  cards_section.replaceChildren();
+  heading.innerText = "Orders page";
+  if (allorders.length === 0) {
+    const card = document.createElement("div");
+    card.setAttribute("class", "card");
+    card.innerHTML = `
+  <h3>No Data Found</h3>
+  `;
+    cards_section.appendChild(card);
   }
 }
 
@@ -299,12 +317,14 @@ alllinks.forEach((link) => {
       cards_section.replaceChildren();
 
       displayDashboard();
-      // const card = document.createElement("div");
-      // card.setAttribute("class", "card");
-      // card.innerHTML = `<h3>Welcome to Dashboard</h3>`;
-      // cards_section.appendChild(card);
+    } else if (link.innerText == "Orders") {
+      // alert("click wrong think");
+      console.log("In Orders page");
+      heading.innerText = "Order Page";
+      cards_section.replaceChildren();
+      displayOrders();
     } else {
-      alert("click wrong think");
+      alert("You Clicked wrong link");
     }
   });
 });
@@ -365,5 +385,5 @@ selected_category.addEventListener("change", () => {
 // cart Functionality
 carticon.addEventListener("click", () => {
   // console.log("cart icon clicked");
-  displayCartItems(cartitems);
+  displayCartItems();
 });
