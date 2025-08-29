@@ -75,6 +75,13 @@ body {
 .cart-btn:hover {
   background-color: #0056b3;
 }
+/* .remove-btn {
+  background-color: red;
+  color: white;
+}
+.remove-btn:hover {
+  background-color: rgb(213, 77, 77);
+} */
 
 /* Sidebar */
 .sidebar {
