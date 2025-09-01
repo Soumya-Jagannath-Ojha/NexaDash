@@ -8,12 +8,14 @@ const logout = document.querySelector("#logout");
 const selected_category = document.querySelector("#category");
 selected_category.style.display = "none";
 const orders = document.querySelector("#orders");
-
-let allusers = [];
-let allproducts = [];
-let activelink = null;
-let cartitems = [];
-let allorders = [];
+const bar = document.querySelector("#bar");
+const sidebar = document.querySelector(".sidebar")
+const searchInput = document.querySelector("#search");
+const cards_section = document.querySelector(".cards");
+const AddToCart = document.querySelector("#AddToCart");
+const carticon = document.querySelector("#cart");
+const filter = document.querySelector(".filter");
+// console.log(filter)
 
 //! Targetting all the p tags from aside
 const alllinks = document.querySelectorAll(
@@ -21,13 +23,15 @@ const alllinks = document.querySelectorAll(
 );
 // console.log(alllinks);
 
-const searchInput = document.querySelector("#search");
-const cards_section = document.querySelector(".cards");
-const AddToCart = document.querySelector("#AddToCart");
-// console.log(AddToCart);
-const carticon = document.querySelector("#cart");
+
 // console.log(carticon)
 carticon.style.display = "none";
+
+let allusers = [];
+let allproducts = [];
+let activelink = null;
+let cartitems = [];
+let allorders = [];
 
 const currUser = JSON.parse(localStorage.getItem("RegisterdData"));
 
@@ -290,6 +294,7 @@ alllinks.forEach((link) => {
   link.addEventListener("click", (e) => {
     alllinks.forEach((links) => {
       links.classList.remove("active");
+      sidebar.classList.remove("bar_active");
     });
     e.currentTarget.classList.toggle("active");
 
@@ -387,3 +392,10 @@ carticon.addEventListener("click", () => {
   // console.log("cart icon clicked");
   displayCartItems();
 });
+
+
+bar.addEventListener("click",()=>{
+  console.log("bar clicked !");
+  sidebar.classList.toggle("bar_active");
+  // sidebar.style.display = "block";
+})
